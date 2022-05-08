@@ -25,8 +25,18 @@ class PopulateDbConfig(
     }
 
     private fun populateDB() {
+        cleanDB()
         val teamMongoList = populateTeams()
         populatePlayers(teamMongoList)
+    }
+
+    private fun cleanDB() {
+        teamRepository.deleteAll().subscribe().with {
+            println("team DB cleaned")
+        }
+        playerRepository.deleteAll().subscribe().with {
+            println("players DB cleaned")
+        }
     }
 
     private fun populateTeams(): MutableList<TeamMongo> {
